@@ -17,8 +17,11 @@ const initialState = {
 export const getDataAsync = createAsyncThunk(
   'app/fetchCount',
   async () => {
-    const register = await ( await fetch( API.getAllRegister() )).json()
-    const stringing = await ( await fetch( API.getAllStringing() )).json()
+    const data1 = await ( await fetch( API.getAllRegister() )).json()
+    const data2 = await ( await fetch( API.getAllStringing() )).json()
+
+    const register = data1.rows
+    const stringing = data2.rows
 
     await new Promise(resolve => setTimeout(resolve, 3000));
 

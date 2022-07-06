@@ -45,10 +45,11 @@ const getRaquetsStatus = data => {
                 raquet:id ,
                 lastStringing:new Date(Math.max(...data.stringing.filter( row => row.raquet === id ).map( row => new Date(row.date)))),
             }))  
-    
+
     // per ogni racchetta vengono calcolate le ore totali
     for (let index = 0; index < raquets.length; index++) {
         const raquet = raquets[index]
+
         raquet.hours = data.register
             .filter( row => (row.raquet === raquet.raquet && new Date( row.date ) > new Date( raquet.lastStringing )) )
             .reduce( ( a , b ) => a + b.hours , 0 )
