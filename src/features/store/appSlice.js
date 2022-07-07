@@ -17,8 +17,11 @@ const initialState = {
 export const getDataAsync = createAsyncThunk(
   'app/fetchCount',
   async () => {
-    const data1 = await ( await fetch( API.getAllRegister() )).json()
-    const data2 = await ( await fetch( API.getAllStringing() )).json()
+    const token = 'YD5MT9A1GDRL046U'
+
+    const data1 = await ( await fetch( API.getAllRegister(),{ method:'GET', headers:{ token }})).json()
+
+    const data2 = await ( await fetch( API.getAllStringing(),{ method:'GET', headers:{ token }})).json()
 
     const register = data1.rows
     const stringing = data2.rows
@@ -43,6 +46,10 @@ export const appSlice = createSlice({
     builder
       .addCase(getDataAsync.pending, (state) => {
         state.dataStatus = 'loading';
+      })
+      .addCase(getDataAsync.rejected, (state) => {
+        state.dataStatus = 'idle';
+        state.data = null ;
       })
       .addCase(getDataAsync.fulfilled, (state, action) => {
         state.dataStatus = 'idle';

@@ -1,44 +1,19 @@
-import React , { useEffect } from 'react';
+import React  from 'react';
 
-import MainView from './features/main/MainView';
+import LoggedView from './features/main/LoggedView';
 
-import { useSelector , useDispatch } from 'react-redux';
-import {
-
-  getDataAsync,
-
-  selectDataStatus,
-  selectData,
-} from './features/store/appSlice';
-
-import LoadingPage from './features/loading/LoadingPage';
+import loginHelper from './features/login/loginHelper';
 
 const App = () => {
 
-  const dispatch = useDispatch()
 
-  const dataStatus = useSelector( selectDataStatus )
-  const data = useSelector( selectData )
+    return (
+      <div>
 
-  // chiamata API all'apertura dell'applicazione
-  useEffect(() => {
-      dispatch( getDataAsync() )
-  },[dispatch])
+            <LoggedView />
 
-  return (
-    <div>
-
-        { dataStatus === 'loading' && <LoadingPage />}
-
-        { ( dataStatus === 'idle' && !data ) &&  <div>No data</div>}
-
-        { ( dataStatus === 'idle' && data ) &&  <MainView />}
-
-        
-    </div>
-  )
+      </div>
+    )
 }
-
-
 
 export default App;
