@@ -5,22 +5,22 @@ import { selectData } from '../store/appSlice';
 
 import styled from 'styled-components';
 
+const RaquetDiv = styled.div`
+    background-color: white;
+    padding: 10px;
+    border: 1px solid black;
+    margin: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: lightblue;
+}
+`
+
 const MainView = () => {
 
     //const dispatch = useDispatch()
     const data = useSelector( selectData )
     const raquets = getRaquetsStatus( data )
-
-    const RaquetDiv = styled.div`
-        background-color: white;
-        padding: 10px;
-        border: 1px solid black;
-        margin: 5px;
-        cursor: pointer;
-        &:hover {
-            background-color: lightblue;
-        }
-    `
 
     return (
         <div>
