@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import API  from './appAPI';
-import loginHelper from './../login/loginHelper'
 
 const initialState = {
   view: 0,
@@ -8,8 +7,6 @@ const initialState = {
   dataStatus:'idle',
   // dati
   data: null,
-  isValidSession:false,
-  token: null,
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -23,10 +20,10 @@ export const getDataAsync = createAsyncThunk(
 
       const state = getState()
 
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-      const data1 = await ( await fetch( API.getAllRegister(),{ method:'GET', headers:{ token:state.app.token }})).json()
-      const data2 = await ( await fetch( API.getAllStringing(),{ method:'GET', headers:{ token:state.app.token }})).json()
+      const data1 = await ( await fetch( API.getAllRegister(),{ method:'GET', headers:{ token:state.login.token }})).json()
+      const data2 = await ( await fetch( API.getAllStringing(),{ method:'GET', headers:{ token:state.login.token }})).json()
 
       const register = data1.rows
       const stringing = data2.rows
@@ -36,39 +33,14 @@ export const getDataAsync = createAsyncThunk(
   }
 );
 
-export const login = createAsyncThunk(
-  'app/login',
-  async ( data ) => {
-      const response = await fetch( API.login(), {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-      })
-
-      return response.json()
-  }
-);
 
 export const appSlice = createSlice({
   name: 'app',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-      checkSession: ( state ) => {
-          const session = loginHelper.getLocalStorage('session')
-          
-          if( session && ((new Date() - new Date( session.datetime )) / 1000 / 3600) < 24){
-              state.isValidSession = true
-              state.token = session.token
-          }else{
-              state.isValidSession = false
-              state.token = ''
-              loginHelper.setLocalStorage('session',null)
-          } 
-          
+      setView: ( state , action ) => {
+          state.view = action.payload
       },
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -86,34 +58,10 @@ export const appSlice = createSlice({
           state.dataStatus = 'idle';
           state.data = action.payload;
         });
-    builder
-        .addCase(login.pending, (state) => {
-            console.log( 'pending' )
-        })
-        .addCase(login.rejected, (state) => {
-            state.isValidSession = false
-        })
-        .addCase(login.fulfilled, (state, action) => {
-            const res = action.payload 
-
-            if( res.result === 1 ){
-                loginHelper.setLocalStorage('session',{
-                    token:res.token,
-                    datetime: new Date()
-                })
-                state.isValidSession = true
-                state.token = res.token
-            }
-            else{
-                state.isValidSession = false
-                state.token = ""
-            }
-
-        });
   },
 });
 
-export const { checkSession } = appSlice.actions;
+export const { setView } = appSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -121,8 +69,5 @@ export const { checkSession } = appSlice.actions;
 export const selectData = (state) => state.app.data
 export const selectDataStatus = (state) => state.app.dataStatus
 export const selectView = (state) => state.app.view
-export const selectIsValidSession = (state) => state.app.isValidSession
-
-
 
 export default appSlice.reducer;

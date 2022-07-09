@@ -1,27 +1,18 @@
 import React , { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 
 import {
     login,
-} from "./../store/appSlice"
+    selectLoginStatus,
+    selectLoginError,
+} from "./../store/loginSlice"
 
+import styleValues from './../style/styleValues'
+
+import Loading from '../loading/Loading';
 
 import styled from 'styled-components';
 
-const LoginInput = styled.div`
-        padding:10px;
-        margin-top:10px;
-        div{
-            padding:2px;
-        };
-        input{
-            display:block;
-            height:35px;
-            display:block;
-            width:100%;
-            text-align:center;
-        }
-    `
 
 const LoginView = () => {
 
@@ -29,6 +20,9 @@ const LoginView = () => {
     const [ password , setPassword ] = useState("")
 
     const dispatch = useDispatch()
+
+    const loginStatus = useSelector( selectLoginStatus )
+    const loginError = useSelector( selectLoginError )
 
     return (
       <div>
@@ -44,7 +38,10 @@ const LoginView = () => {
                         <input value={password} onChange={ (e) => setPassword(e.currentTarget.value) } type="password" />
                     </LoginInput>
 
-                    <button onClick={ () => dispatch(login({username,password})) }>Click</button>
+                    { loginStatus === 'idle' && <LoginButton onClick={ () => dispatch(login({username,password})) }> Login </LoginButton> }
+                    { loginStatus === 'loading' && <Loading /> }
+
+                    <LoginError>{ loginError }</LoginError>
 
                 </div>
 
@@ -55,11 +52,49 @@ const LoginView = () => {
 const style = {
     loginBox:{
         width:450,
+        height:300,
         padding:30,
         margin:'0 auto',
         marginTop:100,
         border:'1px solid lightgrey'
     }
 }
+
+
+const LoginInput = styled.div`
+    padding:10px;
+    margin-top:10px;
+    div{
+        padding:2px;
+    };
+    input{
+        display:block;
+        height:35px;
+        display:block;
+        width:100%;
+        text-align:center;
+    }
+`
+
+const LoginError = styled.div`
+    text-align:center;
+    color:red;
+    font-weight:bold;
+    padding:20px;
+`
+
+const LoginButton = styled.div`
+    text-align:center;
+    background-color:${styleValues.buttonBackground};
+    border:1px solid black;
+    color:${styleValues.buttonColor};
+    font-weight:bold;
+    padding:10px;
+    margin:10px;
+    &:hover {
+        cursor:pointer;
+        opacity:0.7;
+    }
+`
 
 export default LoginView;

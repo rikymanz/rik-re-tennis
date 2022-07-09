@@ -13,7 +13,7 @@ const RaquetDiv = styled.div`
     cursor: pointer;
     &:hover {
         background-color: lightblue;
-}
+    }
 `
 
 const MainView = () => {

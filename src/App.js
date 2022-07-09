@@ -1,14 +1,13 @@
 import React , {useEffect} from 'react'
 import { useSelector , useDispatch } from 'react-redux'
 
-
 import LoggedView from './features/main/LoggedView'
 import LoginView from './features/login/loginView';
 
 import {
   checkSession,
   selectIsValidSession
-} from './features/store/appSlice';
+} from './features/store/loginSlice';
 
 
 const App = () => {
@@ -22,11 +21,8 @@ const App = () => {
 
     return (
       <div>
-
-            { isValidSession && <LoggedView />}
-            { !isValidSession && <LoginView />}
-
-
+          { isValidSession && <LoggedView />}
+          { !isValidSession && <LoginView />}
       </div>
     )
 }
