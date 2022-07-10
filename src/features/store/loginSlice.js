@@ -27,7 +27,7 @@ export const login = createAsyncThunk(
       })
 
       return response.json()
-  });
+ });
 
 export const loginSlice = createSlice({
   name: 'login',

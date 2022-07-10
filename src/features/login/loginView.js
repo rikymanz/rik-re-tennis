@@ -7,8 +7,10 @@ import {
     selectLoginError,
 } from "./../store/loginSlice"
 
-import styleValues from './../style/styleValues'
-
+import { 
+    BlockButton1
+} 
+from './../style/styleValues'
 import Loading from '../loading/Loading';
 
 import styled from 'styled-components';
@@ -38,7 +40,7 @@ const LoginView = () => {
                         <input value={password} onChange={ (e) => setPassword(e.currentTarget.value) } type="password" />
                     </LoginInput>
 
-                    { loginStatus === 'idle' && <LoginButton onClick={ () => dispatch(login({username,password})) }> Login </LoginButton> }
+                    { loginStatus === 'idle' && <BlockButton1 onClick={ () => dispatch(login({username,password})) }> Login </BlockButton1> }
                     { loginStatus === 'loading' && <Loading /> }
 
                     <LoginError>{ loginError }</LoginError>
@@ -83,18 +85,6 @@ const LoginError = styled.div`
     padding:20px;
 `
 
-const LoginButton = styled.div`
-    text-align:center;
-    background-color:${styleValues.buttonBackground};
-    border:1px solid black;
-    color:${styleValues.buttonColor};
-    font-weight:bold;
-    padding:10px;
-    margin:10px;
-    &:hover {
-        cursor:pointer;
-        opacity:0.7;
-    }
-`
+
 
 export default LoginView;

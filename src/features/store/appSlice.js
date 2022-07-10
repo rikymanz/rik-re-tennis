@@ -7,6 +7,7 @@ const initialState = {
   dataStatus:'idle',
   // dati
   data: null,
+  displayedError:'',
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -33,6 +34,26 @@ export const getDataAsync = createAsyncThunk(
   }
 );
 
+export const postRegister = createAsyncThunk(
+  'app/postRegister',
+  async ( data , {getState} ) => {
+
+      const state = getState()
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      const response = await fetch( API.postRegister(), {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, *cors, same-origin
+          headers: {
+            'Content-Type': 'application/json',
+            token:state.login.token
+          },
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+      })
+
+      return response.json()
+ });
+
 
 export const appSlice = createSlice({
   name: 'app',
@@ -48,15 +69,25 @@ export const appSlice = createSlice({
   extraReducers: (builder) => {
     builder
         .addCase(getDataAsync.pending, (state) => {
-          state.dataStatus = 'loading';
+            state.dataStatus = 'loading';
         })
         .addCase(getDataAsync.rejected, (state) => {
-          state.dataStatus = 'idle';
-          state.data = null ;
+            state.dataStatus = 'idle';
+            state.data = null ;
         })
         .addCase(getDataAsync.fulfilled, (state, action) => {
-          state.dataStatus = 'idle';
-          state.data = action.payload;
+            state.dataStatus = 'idle';
+            state.data = action.payload;
+        });
+    builder
+        .addCase(postRegister.pending, (state) => {
+            state.dataStatus = 'loading'
+        })
+        .addCase(postRegister.fulfilled, (state, action) => {
+            state.dataStatus = 'idle'
+            console.log( 'fulfilled')
+            window.location.reload(false);
+
         });
   },
 });
@@ -69,5 +100,6 @@ export const { setView } = appSlice.actions;
 export const selectData = (state) => state.app.data
 export const selectDataStatus = (state) => state.app.dataStatus
 export const selectView = (state) => state.app.view
+export const selectDisplayedError = (state) => state.app.displayedError
 
 export default appSlice.reducer;

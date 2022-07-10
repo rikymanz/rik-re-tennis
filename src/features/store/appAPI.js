@@ -1,9 +1,13 @@
+//const site = 'http://localhost:3000'
+const site = 'https://honorable-ossified-headphones.glitch.me'
+
 const API = {
-    getAllRegister : () => 'http://localhost:3000/register/',
-    getAllStringing : () => 'http://localhost:3000/stringing/',
-    getOneRegister: ( id ) => `http://localhost:3000/register/{$id}`,
-    getOneStringing: ( id ) => `http://localhost:3000/stringing/{$id}`,
-    login: () => `http://localhost:3000/users/login`,
+    getAllRegister : () => `${site}/register/`,
+    getAllStringing : () => `${site}/stringing/`,
+    getOneRegister: ( id ) => `${site}/register/${id}`,
+    getOneStringing: ( id ) => `${site}/stringing/${id}`,
+    login: () =>  `${site}/users/login/`,
+    postRegister : () => `${site}/register/`,
 }
 
 export default API
