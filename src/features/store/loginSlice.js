@@ -4,7 +4,7 @@ import loginHelper from './../login/loginHelper'
 
 const initialState = {
   loginStatus:'idle',
-  loginError:'Nope',
+  loginError:'',
   // dati
   isValidSession:false,
   token: null,
