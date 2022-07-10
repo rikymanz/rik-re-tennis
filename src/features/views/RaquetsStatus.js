@@ -1,18 +1,34 @@
-import React , { useState , useEffect } from 'react'
+import React  from 'react'
 
 import { useSelector } from 'react-redux';
 import { selectData } from '../store/appSlice';
 
 import styled from 'styled-components';
 
+import {
+    getRaquetStatusColor,
+} from './../style/styleValues'
+
 const RaquetDiv = styled.div`
-    background-color: white;
-    padding: 10px;
+    background-color: ${ props => getRaquetStatusColor(props.hours)};
+    height:80px;
     border: 1px solid black;
     margin: 5px;
-    cursor: pointer;
-    &:hover {
-        background-color: lightblue;
+    display:flex;
+    >.raquet{
+        font-size:40px;
+        padding:10px;
+        width:20%;
+        text-align:center;  
+        border-right:1px solid lightgrey;
+    }
+    >.hours{
+        text-align:center;
+        width:95%;
+        font-size:35px;
+        padding-top:10px;
+        color:grey;
+        font-size:bold;
     }
 `
 
@@ -26,9 +42,9 @@ const MainView = () => {
         <div>
             {   raquets &&
                 raquets.map( ( raquet , index ) => (
-                    <RaquetDiv key={index}>
-                        <div> Racchetta : { raquet.raquet } </div>
-                        <div> Ore totali : { raquet.hours } </div>
+                    <RaquetDiv key={index} hours={raquet.hours}>
+                        <div className='raquet'>  { raquet.raquet } </div>
+                        <div className='hours'> { raquet.hours } </div>
                     </RaquetDiv>
                 ))
             }

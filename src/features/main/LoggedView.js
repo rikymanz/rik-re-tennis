@@ -11,6 +11,8 @@ import {
   selectData,
 } from './../store/appSlice';
 
+import { deleteSession } from "./../store/loginSlice"
+
 import LoadingPage from './../loading/LoadingPage';
 
 const LoggedView = () => {
@@ -30,7 +32,13 @@ const LoggedView = () => {
 
         { dataStatus === 'loading' && <LoadingPage />}
 
-        { ( dataStatus === 'idle' && !data ) &&  <div> No data </div>}
+        { ( dataStatus === 'idle' && !data ) &&  
+          <div>
+              Sessione scaduta
+              <br />
+              <button onClick={()=> dispatch(deleteSession())}> Torna al login </button> 
+
+          </div>}
 
         { ( dataStatus === 'idle' && data ) &&  <MainView />}
 

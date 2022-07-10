@@ -6,7 +6,11 @@ import {
     selectData
 } from './../store/appSlice'
 
-import styled from 'styled-components';
+import {
+    AddButton,
+    RowRegister,
+    getResultColor,
+} from './../style/styleValues'
 
 const HoursRegister = () => {
     const dispatch = useDispatch()
@@ -15,28 +19,22 @@ const HoursRegister = () => {
     return (
         <div>
             <AddButton onClick={()=>dispatch(setView(3))}>Aggiungi</AddButton>
-            <div>
+            <div style={{maxHeight:450,overflowY:'scroll'}}>
                 { data.register.map( row =>(
-                    <div key={row.id}>
-                        {row.id}
-                    </div>
+                    <RowRegister 
+                        key={row.id} 
+                        style={{background:getResultColor(row.result)}}
+                    >
+                        <div>{row.raquet} - {row.date}</div>
+                        <div>{row.desc}</div>
+                    </RowRegister>
                 ))}
             </div>
         </div>
     );
 }
 
-const AddButton = styled.div`
-    margin-top:4px;
-    border: 1px solid lightgrey;
-    text-align:center;
-    padding:5px;
-    &:hover{
-        border:1px solid black;
-        cursor:pointer;
-    }
 
-`
 
 
 export default HoursRegister
