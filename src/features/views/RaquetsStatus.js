@@ -1,4 +1,4 @@
-import React  from 'react'
+import React , {useState,useEffect} from 'react'
 
 import { useSelector } from 'react-redux';
 import { selectData } from '../store/appSlice';
@@ -34,9 +34,36 @@ const RaquetDiv = styled.div`
 
 const MainView = () => {
 
+    const [raquets,setRaquets] = useState(null)
+
+    useEffect(() => {
+        setRaquetsStatus( data )
+    });
+
     //const dispatch = useDispatch()
     const data = useSelector( selectData )
-    const raquets = getRaquetsStatus( data )
+
+    const setRaquetsStatus = data => {
+        // array con gli id delle racchette, filtrate e unificate dalle incordature. E l'ultima data di incordatura
+        const raquets = data.stringing
+            .map( row => row.raquet)
+            .filter(( value, index, self ) => self.indexOf(value) === index)
+            .map( id => ({ 
+                    raquet:id ,
+                    lastStringing:new Date(Math.max(...data.stringing.filter( row => row.raquet === id ).map( row => new Date(row.date)))),
+                }))  
+    
+        // per ogni racchetta vengono calcolate le ore totali
+        for (let index = 0; index < raquets.length; index++) {
+            const raquet = raquets[index]
+    
+            raquet.hours = data.register
+                .filter( row => (row.raquet === raquet.raquet && new Date( row.date ) > new Date( raquet.lastStringing )) )
+                .reduce( ( a , b ) => a + b.hours , 0 )
+        } // fine for
+    
+        setRaquets( raquets )
+    } // fine getRaquetsStatus
 
     return (
         <div>
@@ -52,26 +79,6 @@ const MainView = () => {
     );
 }
 
-const getRaquetsStatus = data => {
-    // array con gli id delle racchette, filtrate e unificate dalle incordature. E l'ultima data di incordatura
-    const raquets = data.stringing
-        .map( row => row.raquet)
-        .filter(( value, index, self ) => self.indexOf(value) === index)
-        .map( id => ({ 
-                raquet:id ,
-                lastStringing:new Date(Math.max(...data.stringing.filter( row => row.raquet === id ).map( row => new Date(row.date)))),
-            }))  
 
-    // per ogni racchetta vengono calcolate le ore totali
-    for (let index = 0; index < raquets.length; index++) {
-        const raquet = raquets[index]
-
-        raquet.hours = data.register
-            .filter( row => (row.raquet === raquet.raquet && new Date( row.date ) > new Date( raquet.lastStringing )) )
-            .reduce( ( a , b ) => a + b.hours , 0 )
-    } // fine for
-
-    return raquets
-} // fine getRaquetsStatus
 
 export default MainView
