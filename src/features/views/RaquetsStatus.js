@@ -35,15 +35,16 @@ const RaquetDiv = styled.div`
 const MainView = () => {
 
     const [raquets,setRaquets] = useState(null)
-
-    useEffect(() => {
-        setRaquetsStatus( data )
-    });
-
     //const dispatch = useDispatch()
     const data = useSelector( selectData )
 
+    useEffect(() => {
+        setRaquetsStatus( data )
+    },[ data ]);
+
     const setRaquetsStatus = data => {
+        console.log( data )
+        
         // array con gli id delle racchette, filtrate e unificate dalle incordature. E l'ultima data di incordatura
         const raquets = data.stringing
             .map( row => row.raquet)
@@ -52,7 +53,7 @@ const MainView = () => {
                     raquet:id ,
                     lastStringing:new Date(Math.max(...data.stringing.filter( row => row.raquet === id ).map( row => new Date(row.date)))),
                 }))  
-    
+        console.log( raquets )
         // per ogni racchetta vengono calcolate le ore totali
         for (let index = 0; index < raquets.length; index++) {
             const raquet = raquets[index]
@@ -61,7 +62,7 @@ const MainView = () => {
                 .filter( row => (row.raquet === raquet.raquet && new Date( row.date ) > new Date( raquet.lastStringing )) )
                 .reduce( ( a , b ) => a + b.hours , 0 )
         } // fine for
-    
+        console.log( raquets )
         setRaquets( raquets )
     } // fine getRaquetsStatus
 
