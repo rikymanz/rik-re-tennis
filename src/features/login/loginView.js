@@ -1,5 +1,6 @@
 import React , { useState } from 'react';
 import { useSelector , useDispatch } from 'react-redux';
+import Button from 'react-bootstrap/Button';
 
 import {
     login,
@@ -7,10 +8,7 @@ import {
     selectLoginError,
 } from "./../store/loginSlice"
 
-import { 
-    BlockButton1
-} 
-from './../style/styleValues'
+
 import Loading from '../loading/Loading';
 
 import styled from 'styled-components';
@@ -40,7 +38,15 @@ const LoginView = () => {
                         <input value={password} onChange={ (e) => setPassword(e.currentTarget.value) } type="password" />
                     </LoginInput>
 
-                    { loginStatus === 'idle' && <BlockButton1 onClick={ () => dispatch(login({username,password})) }> Login </BlockButton1> }
+                    { loginStatus === 'idle' && 
+
+                        <div className="d-grid gap-2">
+                            <Button  variant="primary" onClick={ () => dispatch(login({username,password})) }> Login </Button>  
+                        </div>
+                        
+                    }
+                                   
+                    
                     { loginStatus === 'loading' && <Loading /> }
 
                     <LoginError>{ loginError }</LoginError>

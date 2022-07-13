@@ -43,7 +43,6 @@ const MainView = () => {
     },[ data ]);
 
     const setRaquetsStatus = data => {
-        console.log( data )
         
         // array con gli id delle racchette, filtrate e unificate dalle incordature. E l'ultima data di incordatura
         const raquets = data.stringing
@@ -53,7 +52,6 @@ const MainView = () => {
                     raquet:id ,
                     lastStringing:new Date(Math.max(...data.stringing.filter( row => row.raquet === id ).map( row => new Date(row.date)))),
                 }))  
-        console.log( raquets )
         // per ogni racchetta vengono calcolate le ore totali
         for (let index = 0; index < raquets.length; index++) {
             const raquet = raquets[index]
@@ -62,8 +60,8 @@ const MainView = () => {
                 .filter( row => (row.raquet === raquet.raquet && new Date( row.date ) > new Date( raquet.lastStringing )) )
                 .reduce( ( a , b ) => a + b.hours , 0 )
         } // fine for
-        console.log( raquets )
         setRaquets( raquets )
+
     } // fine getRaquetsStatus
 
     return (
@@ -75,6 +73,20 @@ const MainView = () => {
                         <div className='hours'> { raquet.hours } </div>
                     </RaquetDiv>
                 ))
+            }
+
+
+            {   raquets &&
+                <div>
+                    Test <br />
+                    Lunghezza stringing : { data.stringing.length }
+                    <br />
+                    Lunghezza register : { data.register.length }
+                    <br />
+                    {new Date(Math.max(...data.stringing.map( row => new Date(row.date)))).toISOString()}
+                    <br />
+                    {JSON.stringify(raquets)}
+                </div>
             }
         </div>
     );
