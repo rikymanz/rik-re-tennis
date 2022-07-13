@@ -27,8 +27,8 @@ export const getDataAsync = createAsyncThunk(
       const data1 = await ( await fetch( API.getAllRegister(),{ method:'GET', headers:{ token:state.login.token }})).json()
       const data2 = await ( await fetch( API.getAllStringing(),{ method:'GET', headers:{ token:state.login.token }})).json()
 
-      const register = data1.rows
-      const stringing = data2.rows
+      const register = data1.rows.map( row => ({...row, date: row.date.replace(" ","T").concat(":00.000Z")}) )
+      const stringing = data2.rows.map( row => ({...row, date: row.date.replace(" ","T").concat(":00.000Z")}) )
 
       // The value we return becomes the `fulfilled` action payload
       return { register , stringing }

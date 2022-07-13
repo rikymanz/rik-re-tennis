@@ -43,7 +43,6 @@ const MainView = () => {
     },[ data ]);
 
     const setRaquetsStatus = data => {
-        
         // array con gli id delle racchette, filtrate e unificate dalle incordature. E l'ultima data di incordatura
         const raquets = data.stringing
             .map( row => row.raquet)
@@ -75,19 +74,6 @@ const MainView = () => {
                 ))
             }
 
-
-            {   raquets &&
-                <div>
-                    Test <br />
-                    Lunghezza stringing : { data.stringing.length }
-                    <br />
-                    Lunghezza register : { data.register.length }
-                    <br />
-                    {new Date(Math.max(...data.stringing.map( row => new Date(row.date)))).toISOString()}
-                    <br />
-                    {JSON.stringify(raquets)}
-                </div>
-            }
         </div>
     );
 }
