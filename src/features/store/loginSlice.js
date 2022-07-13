@@ -15,6 +15,7 @@ export const login = createAsyncThunk(
   'login/login',
   async ( data ) => {
 
+      // eslint-disable-next-line no-undef
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       const response = await fetch( API.login(), {
@@ -62,7 +63,7 @@ export const loginSlice = createSlice({
             state.loginStatus = 'loading'
             state.loginError = ''
         })
-        .addCase(login.rejected, ( state , action) => {
+        .addCase(login.rejected, ( state ) => {
             state.isValidSession = false
             state.loginStatus = 'idle'
             state.loginError = 'Errore di connessione'

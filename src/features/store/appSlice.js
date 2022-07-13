@@ -21,6 +21,7 @@ export const getDataAsync = createAsyncThunk(
 
       const state = getState()
 
+      // eslint-disable-next-line no-undef
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       const data1 = await ( await fetch( API.getAllRegister(),{ method:'GET', headers:{ token:state.login.token }})).json()
@@ -39,6 +40,7 @@ export const postRegister = createAsyncThunk(
   async ( data , {getState} ) => {
 
       const state = getState()
+      // eslint-disable-next-line no-undef
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       const response = await fetch( API.postRegister(), {
@@ -83,7 +85,7 @@ export const appSlice = createSlice({
         .addCase(postRegister.pending, (state) => {
             state.dataStatus = 'loading'
         })
-        .addCase(postRegister.fulfilled, (state, action) => {
+        .addCase(postRegister.fulfilled, (state) => {
             state.dataStatus = 'idle'
             console.log( 'fulfilled')
             window.location.reload(false);
