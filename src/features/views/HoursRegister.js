@@ -6,10 +6,14 @@ import {
     selectData
 } from './../store/appSlice'
 
+import{
+    toRealIsoDate
+} from './../helpers/generalHelper'
+
 import {
-    AddButton,
-    RowRegister,
+    Rows,
     getResultColor,
+    BlockButton1,
 } from './../style/styleValues'
 
 const HoursRegister = () => {
@@ -18,20 +22,35 @@ const HoursRegister = () => {
 
     return (
         <div>
-            <AddButton onClick={()=>dispatch(setView(3))}>Aggiungi</AddButton>
+            <BlockButton1 onClick={()=>dispatch(setView(3))}>Aggiungi</BlockButton1>
             <div style={{maxHeight:450,overflowY:'scroll'}}>
                 { data.register.map( row =>(
-                    <RowRegister 
+                    <Rows 
                         key={row.id} 
-                        style={{background:getResultColor(row.result)}}
                     >
-                        <div>{row.raquet} - {row.date}</div>
-                        <div>{row.desc}</div>
-                    </RowRegister>
+                        <div style={{...style.inlineRegister,width:'92%'}}>
+                            <div>
+                                Raquet: <span style={{fontWeight:'bold'}}>{row.raquet}</span> 
+                                <span style={{fontStyle:'italic',fontSize:12}}>( {row.hours} hours )</span>{' '}
+                                <span style={{float:'right',fontSize:12}}>{toRealIsoDate(row.date)}</span>
+                            </div>
+                            <div style={{fontStyle:'italic',fontSize:12}}>{row.desc}</div>
+                        </div>
+                        <div style={{...style.inlineRegister,width:'7%',paddingTop:12,textAlign:'center'}}>
+                            <div style={{display:'inline-block',height:15,width:15,borderRadius:15,background:getResultColor(row.result)}}></div>
+                        </div>
+                    </Rows>
                 ))}
             </div>
         </div>
     );
+}
+
+const style = {
+    inlineRegister:{
+        display:'inline-block',
+        verticalAlign:'top',
+    }
 }
 
 

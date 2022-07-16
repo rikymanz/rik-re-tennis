@@ -4,7 +4,7 @@ const StringsRegister = () => {
 
     return (
         <div>
-            Stringing
+            In progress...
         </div>
     );
 }

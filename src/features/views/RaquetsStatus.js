@@ -7,30 +7,40 @@ import styled from 'styled-components';
 
 import {
     getRaquetStatusColor,
+    primaryColor,
+    getRaquetColor,
+
 } from './../style/styleValues'
 
 const RaquetDiv = styled.div`
-    background-color: ${ props => getRaquetStatusColor(props.hours)};
+    background:${primaryColor};
     height:80px;
-    border: 1px solid black;
     margin: 5px;
+    margin-top:15px;
     display:flex;
-    >.raquet{
+    border-radius:15px;
+    >.raquetDiv{
         font-size:40px;
         padding:10px;
-        width:20%;
+        width:25%;
         text-align:center;  
-        border-right:1px solid lightgrey;
     }
-    >.hours{
+    >.hoursDiv{
         text-align:center;
-        width:95%;
+        width:65%;
         font-size:35px;
         padding-top:10px;
-        color:grey;
+        color:${ props => getRaquetStatusColor(props.hours) };
         font-size:bold;
     }
 `
+
+const RaquetValue = styled.div`
+    background:${ props => props.color};
+    border-radius:15px;
+    color:white;
+`
+
 
 const MainView = () => {
 
@@ -68,11 +78,30 @@ const MainView = () => {
             {   raquets &&
                 raquets.map( ( raquet , index ) => (
                     <RaquetDiv key={index} hours={raquet.hours}>
-                        <div className='raquet'>  { raquet.raquet } </div>
-                        <div className='hours'> { raquet.hours } </div>
+                        <div className='raquetDiv'> 
+                            <RaquetValue color={getRaquetColor( raquet.raquet )}>
+                                { raquet.raquet } 
+                            </RaquetValue>
+                        </div>
+                        <div className='hoursDiv'> 
+                            <div>{ raquet.hours } </div>
+                        </div>
+                        
                     </RaquetDiv>
                 ))
             }
+
+                    <RaquetDiv hours='0'>
+                        <div className='raquetDiv'> 
+                            <RaquetValue color={getRaquetColor( 3 )}>
+                                3
+                            </RaquetValue>
+                        </div>
+                        <div className='hoursDiv'> 
+                            <div> - </div>
+                        </div>
+                        
+                    </RaquetDiv>
 
         </div>
     );

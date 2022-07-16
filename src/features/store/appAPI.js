@@ -1,5 +1,5 @@
-//const site = 'http://localhost:3000'
-const site = 'https://honorable-ossified-headphones.glitch.me'
+const site = 'http://localhost:3000'
+//const site = 'https://honorable-ossified-headphones.glitch.me'
 
 const API = {
     getAllRegister : () => `${site}/register/`,

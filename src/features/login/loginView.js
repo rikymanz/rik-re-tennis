@@ -1,12 +1,16 @@
 import React , { useState } from 'react';
 import { useSelector , useDispatch } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 
 import {
     login,
     selectLoginStatus,
     selectLoginError,
 } from "./../store/loginSlice"
+
+import {
+    primaryColor,
+    BlockButton1,
+} from './../style/styleValues'
 
 
 import Loading from '../loading/Loading';
@@ -41,12 +45,11 @@ const LoginView = () => {
                     { loginStatus === 'idle' && 
 
                         <div className="d-grid gap-2">
-                            <Button  variant="primary" onClick={ () => dispatch(login({username,password})) }> Login </Button>  
+                            <BlockButton1  onClick={ () => dispatch(login({username,password})) }> Login </BlockButton1>  
                         </div>
                         
                     }
-                                   
-                    
+                                     
                     { loginStatus === 'loading' && <Loading /> }
 
                     <LoginError>{ loginError }</LoginError>
@@ -60,11 +63,14 @@ const LoginView = () => {
 const style = {
     loginBox:{
         width:450,
+        maxWidth:'100%',
         height:300,
         padding:30,
         margin:'0 auto',
         marginTop:100,
-        border:'1px solid lightgrey'
+        border:`1px solid ${primaryColor}`,
+        background: primaryColor ,
+        borderRadius:'15px',
     }
 }
 
