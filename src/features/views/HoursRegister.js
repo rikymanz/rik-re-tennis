@@ -22,7 +22,7 @@ const HoursRegister = () => {
 
     return (
         <div>
-            <BlockButton1 onClick={()=>dispatch(setView(3))}>Aggiungi</BlockButton1>
+            <BlockButton1 onClick={()=>dispatch(setView(3))}>New match</BlockButton1>
             <div style={{maxHeight:450,overflowY:'scroll'}}>
                 { data.register.map( row =>(
                     <Rows 
@@ -31,10 +31,10 @@ const HoursRegister = () => {
                         <div style={{...style.inlineRegister,width:'92%'}}>
                             <div>
                                 Raquet: <span style={{fontWeight:'bold'}}>{row.raquet}</span> 
-                                <span style={{fontStyle:'italic',fontSize:12}}>( {row.hours} hours )</span>{' '}
                                 <span style={{float:'right',fontSize:12}}>{toRealIsoDate(row.date)}</span>
                             </div>
-                            <div style={{fontStyle:'italic',fontSize:12}}>{row.desc}</div>
+                            <span style={{fontStyle:'italic',fontSize:12}}>{row.desc}</span>
+                            <span style={{fontStyle:'italic',fontSize:12,float:'right'}}> Hours: <b>{row.hours}</b></span>
                         </div>
                         <div style={{...style.inlineRegister,width:'7%',paddingTop:12,textAlign:'center'}}>
                             <div style={{display:'inline-block',height:15,width:15,borderRadius:15,background:getResultColor(row.result)}}></div>

@@ -8,6 +8,7 @@ const API = {
     getOneStringing: ( id ) => `${site}/stringing/${id}`,
     login: () =>  `${site}/users/login/`,
     postRegister : () => `${site}/register/`,
+    postStringing : () => `${site}/stringing/`,
 }
 
 export default API

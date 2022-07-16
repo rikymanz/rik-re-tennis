@@ -7,6 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import {
     ViewTitle,
     BlockButton1,
+    PostInputDiv,
 } from './../style/styleValues'
 
 import {
@@ -36,18 +37,18 @@ const PostRegister = () => {
 
     return (
         <div>
-            <ViewTitle>Inserisci partita</ViewTitle>
-            <div>
-                <div>
-                    <span>Racchetta</span>
+            <ViewTitle> Add match </ViewTitle>
+            <div style={{padding:'0 20px'}}>
+                <PostInputDiv>
+                    <span>Raquet</span>
                     <Form.Select aria-label="Default select example" onChange={(e)=>setData({...data,raquet:e.currentTarget.value})} value={data.raquet}>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                     </Form.Select>
-                </div>
-                <div>
-                    <span>Descrizione</span>
+                </PostInputDiv>
+                <PostInputDiv>
+                    <span>Description</span>
                     <InputGroup>
                         <Form.Control
                             aria-label="Large"
@@ -55,9 +56,9 @@ const PostRegister = () => {
                             onChange={(e)=>setData({...data,desc:e.currentTarget.value})}
                         />
                     </InputGroup>
-                </div>
-                <div>
-                    <span>Data</span>
+                </PostInputDiv>
+                <PostInputDiv>
+                    <span>Date</span>
                     <InputGroup>
                         <Form.Control
                             aria-label="Large"
@@ -67,9 +68,9 @@ const PostRegister = () => {
                             value={data.date}
                         />
                     </InputGroup>
-                </div>
-                <div>
-                    <span>Ore giocate</span>
+                </PostInputDiv>
+                <PostInputDiv>
+                    <span>Hours played</span>
                     <InputGroup>
                         <Form.Control
                             aria-label="Large"
@@ -82,17 +83,17 @@ const PostRegister = () => {
                             value={data.hours}
                         />
                     </InputGroup>
-                </div>
-                <div>
-                    <span>Risultato</span>
+                </PostInputDiv>
+                <PostInputDiv>
+                    <span>Result</span>
                     <Form.Select aria-label="Default select example"  onChange={(e)=>setData({...data,result:e.currentTarget.value})} value={data.result}>
                         <option value="1">Vittoria</option>
                         <option value="2">Sconfitta</option>
                         <option value="0">Pareggio o altro</option>
                     </Form.Select>
-                </div>
-                <div>
-                    <span>Costo</span>
+                </PostInputDiv>
+                <PostInputDiv>
+                    <span>Cost</span>
                     <InputGroup>
                         <Form.Control
                             aria-label="Large"
@@ -104,7 +105,9 @@ const PostRegister = () => {
                             value={data.cost}
                         />
                     </InputGroup>
-                </div>
+                </PostInputDiv>
+
+                <br />
 
                 <BlockButton1 onClick={handleSubmit}>
                     Aggiungi

@@ -19,19 +19,20 @@ export const getDataAsync = createAsyncThunk(
   'app/getDataAsync',
   async ( arg , { getState }) => {
 
-      const state = getState()
+        const state = getState()
 
-      // eslint-disable-next-line no-undef
-      await new Promise(resolve => setTimeout(resolve, 2000));
+        // eslint-disable-next-line no-undef
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
-      const data1 = await ( await fetch( API.getAllRegister(),{ method:'GET', headers:{ token:state.login.token }})).json()
-      const data2 = await ( await fetch( API.getAllStringing(),{ method:'GET', headers:{ token:state.login.token }})).json()
+        const data1 = await ( await fetch( API.getAllRegister(),{ method:'GET', headers:{ token:state.login.token }})).json()
+        const data2 = await ( await fetch( API.getAllStringing(),{ method:'GET', headers:{ token:state.login.token }})).json()
+        
+        // trasformazione date nel formato corretto. Per evitare problemi con mobile
+        const register = data1.rows.map( row => ({...row, date: row.date.replace(" ","T").concat(":00.000Z")}) )
+        const stringing = data2.rows.map( row => ({...row, date: row.date.replace(" ","T").concat(":00.000Z")}) )
 
-      const register = data1.rows.map( row => ({...row, date: row.date.replace(" ","T").concat(":00.000Z")}) )
-      const stringing = data2.rows.map( row => ({...row, date: row.date.replace(" ","T").concat(":00.000Z")}) )
-
-      // The value we return becomes the `fulfilled` action payload
-      return { register , stringing }
+        // The value we return becomes the `fulfilled` action payload
+        return { register , stringing }
   }
 );
 
@@ -55,6 +56,27 @@ export const postRegister = createAsyncThunk(
 
       return response.json()
  });
+
+ export const postStringing = createAsyncThunk(
+    'app/postStringing',
+    async ( data , {getState} ) => {
+  
+        const state = getState()
+        // eslint-disable-next-line no-undef
+        await new Promise(resolve => setTimeout(resolve, 2000));
+  
+        const response = await fetch( API.postStringing(), {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+              'Content-Type': 'application/json',
+              token:state.login.token
+            },
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        })
+  
+        return response.json()
+   });
 
 
 export const appSlice = createSlice({
@@ -87,7 +109,15 @@ export const appSlice = createSlice({
         })
         .addCase(postRegister.fulfilled, (state) => {
             state.dataStatus = 'idle'
-            console.log( 'fulfilled')
+            window.location.reload(false);
+
+        });
+    builder
+        .addCase(postStringing.pending, (state) => {
+            state.dataStatus = 'loading'
+        })
+        .addCase(postStringing.fulfilled, (state) => {
+            state.dataStatus = 'idle'
             window.location.reload(false);
 
         });

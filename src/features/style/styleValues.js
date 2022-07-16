@@ -26,6 +26,10 @@ export const BlockButton1 = styled.div`
     }
 `
 
+export const PostInputDiv = styled.div`
+    margin-top:10px
+`
+
 export const MenuButton = styled.div`
     border:1px solid ${primaryColor};
     height:55px;
@@ -54,13 +58,6 @@ export const Rows = styled.div`
     padding:10px;
     margin:5px;
     border-radius:25px;
-`
-
-export const OldRows = styled.div`
-    border:1px solid lightgrey;
-    height:55px;
-    padding:3px;
-    margin-top:2px;
 `
 
 export const getResultColor = ( res ) => {

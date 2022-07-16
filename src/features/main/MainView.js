@@ -28,8 +28,8 @@ const MainView = () => {
         <div style={{ ...style.main }}>
             <MenuBar>
                 <MenuButton selected={selectedView === 0 ? true : false } style={{ paddingTop:25 }} onClick={()=>dispatch(setView(0))}> Home  </MenuButton>
-                <MenuButton selected={selectedView === 1 || selectedView === 3} onClick={()=>dispatch(setView(1))}> Registro <br /> partite </MenuButton>
-                <MenuButton selected={selectedView === 2 || selectedView === 4} onClick={()=>dispatch(setView(2))}> Registro <br /> incordature </MenuButton>
+                <MenuButton selected={selectedView === 1 || selectedView === 3} onClick={()=>dispatch(setView(1))}> Match <br /> register </MenuButton>
+                <MenuButton selected={selectedView === 2 || selectedView === 4} onClick={()=>dispatch(setView(2))}> Stringing <br /> register </MenuButton>
             </MenuBar>
 
             { selectedView === 0 && <RaquetsStatus/>}

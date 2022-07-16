@@ -69,6 +69,9 @@ const MainView = () => {
                 .filter( row => (row.raquet === raquet.raquet && new Date( row.date ) > new Date( raquet.lastStringing )) )
                 .reduce( ( a , b ) => a + b.hours , 0 )
         } // fine for
+
+        raquets.sort((a, b) => ( a.raquet > b.raquet ? 1 : -1 ));
+
         setRaquets( raquets )
 
     } // fine getRaquetsStatus
@@ -90,18 +93,20 @@ const MainView = () => {
                     </RaquetDiv>
                 ))
             }
-
-                    <RaquetDiv hours='0'>
-                        <div className='raquetDiv'> 
-                            <RaquetValue color={getRaquetColor( 3 )}>
-                                3
-                            </RaquetValue>
-                        </div>
-                        <div className='hoursDiv'> 
-                            <div> - </div>
-                        </div>
-                        
-                    </RaquetDiv>
+            {   (raquets && raquets.length < 3) &&
+                <RaquetDiv hours='0'>
+                    <div className='raquetDiv'> 
+                        <RaquetValue color={getRaquetColor( 3 )}>
+                            3
+                        </RaquetValue>
+                    </div>
+                    <div className='hoursDiv'> 
+                        <div> - </div>
+                    </div>
+                    
+                </RaquetDiv>
+            }
+                    
 
         </div>
     );
