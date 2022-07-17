@@ -9,6 +9,8 @@ const API = {
     login: () =>  `${site}/users/login/`,
     postRegister : () => `${site}/register/`,
     postStringing : () => `${site}/stringing/`,
+    patchRegister : ( id ) => `${site}/register/${id}`,
+    patchStringing : ( id ) => `${site}/stringing/${id}`,
 }
 
 export default API
