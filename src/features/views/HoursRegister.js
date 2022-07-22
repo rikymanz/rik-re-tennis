@@ -3,7 +3,10 @@ import { useSelector , useDispatch } from 'react-redux';
 
 import {
     setView,
-    selectData
+    selectData,
+
+    setPatchRegisterView,
+
 } from './../store/appSlice'
 
 import{
@@ -27,14 +30,15 @@ const HoursRegister = () => {
                 { data.register.map( row =>(
                     <Rows 
                         key={row.id} 
+                        onClick={() => dispatch(setPatchRegisterView(row.id))}
                     >
                         <div style={{...style.inlineRegister,width:'92%'}}>
                             <div>
                                 Raquet: <span style={{fontWeight:'bold'}}>{row.raquet}</span> 
-                                <span style={{float:'right',fontSize:12}}>{toRealIsoDate(row.date)}</span>
+                                <span style={{float:'right',fontSize:11}}>{toRealIsoDate(row.date)}</span>
                             </div>
-                            <span style={{fontStyle:'italic',fontSize:12}}>{row.desc}</span>
-                            <span style={{fontStyle:'italic',fontSize:12,float:'right'}}> Hours: <b>{row.hours}</b></span>
+                            <span style={{fontStyle:'italic',fontSize:11}}>{row.desc}</span>
+                            <span style={{fontStyle:'italic',fontSize:11,float:'right'}}> Hours: <b>{row.hours}</b></span>
                         </div>
                         <div style={{...style.inlineRegister,width:'7%',paddingTop:12,textAlign:'center'}}>
                             <div style={{display:'inline-block',height:15,width:15,borderRadius:15,background:getResultColor(row.result)}}></div>

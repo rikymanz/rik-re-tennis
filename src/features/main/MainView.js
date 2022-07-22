@@ -18,6 +18,7 @@ import HoursRegister from './../views/HoursRegister'
 import StringsRegister from './../views/StringsRegister'
 import PostRegister from '../views/PostRegister'
 import PostStringing from '../views/PostStringing'
+import PatchRegister from '../views/PatchRegister';
 
 const MainView = () => {
 
@@ -28,8 +29,8 @@ const MainView = () => {
         <div style={{ ...style.main }}>
             <MenuBar>
                 <MenuButton selected={selectedView === 0 ? true : false } style={{ paddingTop:25 }} onClick={()=>dispatch(setView(0))}> Home  </MenuButton>
-                <MenuButton selected={selectedView === 1 || selectedView === 3} onClick={()=>dispatch(setView(1))}> Match <br /> register </MenuButton>
-                <MenuButton selected={selectedView === 2 || selectedView === 4} onClick={()=>dispatch(setView(2))}> Stringing <br /> register </MenuButton>
+                <MenuButton selected={selectedView === 1 || selectedView === 3 || selectedView === 5} onClick={()=>dispatch(setView(1))}> Match <br /> register </MenuButton>
+                <MenuButton selected={selectedView === 2 || selectedView === 4 || selectedView === 6} onClick={()=>dispatch(setView(2))}> Stringing <br /> register </MenuButton>
             </MenuBar>
 
             { selectedView === 0 && <RaquetsStatus/>}
@@ -38,6 +39,8 @@ const MainView = () => {
 
             { selectedView === 3 && <PostRegister/>}
             { selectedView === 4 && <PostStringing/>}
+
+            { selectedView === 5 && <PatchRegister/>}
 
 
         </div>
